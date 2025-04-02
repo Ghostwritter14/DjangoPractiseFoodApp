@@ -1,4 +1,4 @@
-{% load static %}
+{%  extends 'food/base.html' %}
 <!doctype html>
 <html lang="en">
 <head>
@@ -7,9 +7,9 @@
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Document</title>
-    <link rel="stylesheet" href="{% static 'food/style.css' %}">
 </head>
 <body>
+{% block body %}
 {% for item in item_list %}
     <ul>
     <li>
@@ -17,5 +17,6 @@
     </li>
     </ul>
 {% endfor %}
+{% endblock %}
 </body>
 </html>
