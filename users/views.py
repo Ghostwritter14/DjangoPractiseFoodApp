@@ -1,18 +1,17 @@
 from django.shortcuts import render, redirect
-from django.contrib.auth.forms import UserCreationForm
 from django.contrib import messages
-
+from .forms import RegisterForm
 
 def register(request):
     if request.method == 'POST':
-        form = UserCreationForm(request.POST)
+        form = RegisterForm(request.POST)
         if form.is_valid():
+            form.save()
             username = form.cleaned_data.get('username')
-            email = form.cleaned_data.get('email')
-            messages.success(request, f'Account created for {username}! with email: {email}')
+            messages.success(request, f'Account created for {username}!')
             return redirect('food:index')
         else:
-            form = UserCreationForm()
+            form = RegisterForm()
     return render(request, 'users/register.html', {"form": form})
 
 
