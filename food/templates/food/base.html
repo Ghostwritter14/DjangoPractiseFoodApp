@@ -13,10 +13,20 @@
     <title>Title</title>
 </head>
 <body>
-<nav class="navbar navbar-dark bg-dark">
-    <a href="#" class="navbar-brand"> Food App </a>
-    <div class="navbar">
-        <a class="nav-item navbar-link" href="#">Menu Item</a>
+<nav class="navbar navbar-dark bg-dark navbar-expand-lg">
+    <a href="#" class="navbar-brand ms-3">Food App</a>
+    <div class="collapse navbar-collapse">
+        <ul class="navbar-nav ms-auto me-3">
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'food:create_item' %}">Add Item</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#">Delete Item</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#">View Item</a>
+            </li>
+        </ul>
     </div>
 </nav>
 {%block body%}

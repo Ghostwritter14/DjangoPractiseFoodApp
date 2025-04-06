@@ -10,28 +10,34 @@
 </head>
 <body>
 {% block body %}
-{% for item in item_list %}
-{#    <ul>#}
-{#    <li>#}
-{#        <a href="{% url 'food:detail' item.id %}"> {{ item.id }} -- {{ item.item_name }} </a>#}
-{#    </li>#}
-{#    </ul>#}
-    <div class="row"  >
-        <div class="col-md-3 offset-md-2">
-            <img class="card" height="150px" src="{{ item.item_image }}">
-        </div>
-        <div class="col-md4">
-            <h3> {{ item.item_name }}</h3>
-            <h5>{{ item.item_description }}</h5>
-            <h6> £{{ item.item_price }}</h6>
-        </div>
-        <div class="col-md-2">
-            <a href="" class="btn btn-success">
-                {% url 'food:detail' item.id %}
-            </a>
+    <div class="container mt-4">
+    {% for item in item_list %}
+    <div class="card mb-3">
+        <div class="row g-0 align-items-center">
+
+            <div class="col-md-4">
+                <img src="{{ item.item_image }}" class="img-fluid rounded-start" alt="{{ item.item_name }}">
+            </div>
+
+
+            <div class="col-md-6">
+                <div class="card-body">
+                    <h5 class="card-title">{{ item.item_name }}</h5>
+                    <p class="card-text">{{ item.item_description }}</p>
+                    <p class="card-text"><strong>£{{ item.item_price }}</strong></p>
+                </div>
+            </div>
+
+
+            <div class="col-md-2 text-center">
+                <a href="{% url 'food:detail' item.id %}" class="btn btn-success mt-3">
+                    View
+                </a>
+            </div>
         </div>
     </div>
-{% endfor %}
+    {% endfor %}
+</div>
 {% endblock %}
 </body>
 </html>
