@@ -1,13 +1,23 @@
-{% extends 'food/base.html' %}
+{%  extends "food/base.html" %}
 {% block body %}
-
-<form method="POST">
-    {#security method from cross site scripting#}
-    {% csrf_token %}
-    {{ form }}
-    <button type="submit">
-        Save
-    </button>
-</form>
-
+    <div class="container">
+    <div class="row">
+        <div class="col-md-4 col-md-offset-4">
+            <div class="card">
+                <div class="card-header bg-info">
+                    <div class="card-title">
+                        Add Item
+                    </div>
+                </div>
+                <div class="card-body">
+                    <form method="POST">
+                        {% csrf_token %}
+                        {{ form }}
+                        <button class="btn-info" type="submit"> Add </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 {% endblock %}
