@@ -28,12 +28,12 @@ def item(request):
     return HttpResponse("Hello, world. You're at item.")
 
 
-def detail(request, item_id):
-    item = Item.objects.get(pk=item_id)
-    context = {
-        'item': item
-    }
-    return render(request, 'food/detail.html', context)
+# def detail(request, item_id):
+#     item = Item.objects.get(pk=item_id)
+#     context = {
+#         'item': item
+#     }
+#     return render(request, 'food/detail.html', context)
 
 
 class DetailClassView(DetailView):
