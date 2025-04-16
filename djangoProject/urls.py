@@ -20,9 +20,10 @@ from users import views as users_views
 from django.contrib.auth import views as auth_views
 from django.conf import settings
 from django.conf.urls.static import static
-
+from food.urls import LandingPageView
 urlpatterns = [
     path("admin/", admin.site.urls),
+    path('', LandingPageView.as_view(), name='landing'),
     path("food/", include("food.urls")),
     path("register/", users_views.register, name="Register"),
     path("login/", auth_views.LoginView.as_view(template_name="users/login.html"), name="login"),

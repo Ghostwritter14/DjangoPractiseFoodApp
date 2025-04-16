@@ -1,14 +1,17 @@
 from django.http import HttpResponse
 from django.shortcuts import render, redirect
-
 from . import models
 from .forms import ItemForm
 from .models import Item
 from django.template import loader
-from django.views.generic import ListView
+from django.views.generic import ListView, TemplateView
 from django.views.generic import DetailView
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 
+
+
+class LandingPageView(TemplateView):
+    template_name = 'food/landing.html'
 
 class IndexClassView(ListView):
     model = Item

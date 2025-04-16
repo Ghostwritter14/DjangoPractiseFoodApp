@@ -1,3 +1,72 @@
-body{
-    background-color: aqua;
+body, html {
+    margin: 0;
+    padding: 0;
+    font-family: 'Segoe UI', sans-serif;
+    height: 100%;
+    overflow-x: hidden;
+    position: relative;
+}
+
+.background {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    width: 100vw;
+    z-index: -1;
+    background-size: cover;
+    background-position: center;
+    animation: rotateBackground 24s infinite;
+    filter: blur(8px) brightness(0.7);
+    transition: background-image 1s ease-in-out;
+}
+
+@keyframes rotateBackground {
+    0% { background-image: url('/static/food/images/bg1.jpg'); }
+    33% { background-image: url('/static/food/images/bg2.jpg'); }
+    66% { background-image: url('/static/food/images/bg3.jpg'); }
+    100% { background-image: url('/static/food/images/bg1.jpg'); }
+}
+
+.navbar {
+    backdrop-filter: blur(10px);
+    background-color: rgba(0, 0, 0, 0.5) !important;
+    transition: background-color 0.4s ease-in-out;
+}
+
+.navbar a.nav-link {
+    transition: color 0.3s ease;
+}
+.navbar a.nav-link:hover {
+    color: #ffc107; /* gold accent on hover */
+}
+
+/* === Card Nesting for Menu === */
+.outer-card {
+    background-color: rgba(255, 255, 255, 0.85);
+    border-radius: 15px;
+    padding: 2rem;
+    margin-bottom: 2rem;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.2);
+}
+
+.inner-card {
+    border-radius: 12px;
+    margin: 1rem 0;
+    background-color: #fff;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+/* === Responsive Typography === */
+h1, h2, h3 {
+    color: #333;
+}
+
+/* === Button Enhancements === */
+.btn {
+    transition: all 0.3s ease;
+}
+.btn:hover {
+    transform: scale(1.05);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
 }
