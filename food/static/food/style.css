@@ -146,3 +146,37 @@ h1, h2, h3, h4 {
   color: #555;
   line-height: 1.4;
 }
+
+.feature-card {
+  background-color: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(12px);
+  border-radius: 12px;
+  padding: 1.5rem;
+  text-align: center;
+  transition: background-color 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+/* hide the description until hover */
+.feature-card p {
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  color: #fff;           /* make sure it contrasts the card */
+  margin-top: 1rem;
+}
+
+/* on hover: brighten, show the text */
+.feature-card:hover {
+  background-color: rgba(255, 255, 255, 0.2);
+}
+
+.feature-card:hover p {
+  opacity: 1;
+}
+
+/* title always visible */
+.feature-card h4 {
+  color: #fff;
+  margin-bottom: 0.5rem;
+}
