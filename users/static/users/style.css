@@ -1,0 +1,96 @@
+body, html {
+  margin: 0;
+  padding: 0;
+  height: 100vh;
+  overflow: hidden;
+  position: relative;
+}
+.background {
+  position: fixed; top: 0; left: 0;
+  width: 100%; height: 100%;
+  background-size: cover;
+  background-position: center;
+  filter: blur(8px) brightness(0.7);
+  z-index: -1;
+}
+
+/* 2) Centered blurred card for login/register/etc. */
+.auth-card {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 25%;              /* 25% of viewport width */
+  max-width: 400px;        /* optional cap so it doesn’t get too large on giant screens */
+  min-width: 300px;        /* optional floor so it stays usable on small screens */
+  background: rgba(255,255,255,0.1);
+  backdrop-filter: blur(12px);
+  border-radius: 12px;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.2);
+  padding: 2rem;
+  color: #fff;
+}
+
+.auth-card form {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+}
+
+/* Each group (label + control) takes full width with consistent spacing */
+.auth-card .mb-3,
+.auth-card .form-group {
+  width: 100%;
+  margin-bottom: 1.5rem;
+}
+
+/* Labels stack above inputs, full width */
+.auth-card label,
+.auth-card .form-control-label {
+  display: block;
+  width: 100%;
+  margin-bottom: 0.5rem;
+  color: #fff;
+  font-weight: 500;
+}
+
+/* Inputs fill the container exactly */
+.auth-card .form-control {
+  display: block;
+  width: 100%;
+  padding: 0.5rem;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+
+.auth-card .form-control:hover {
+  transform: scale(1.03);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+}
+
+/* 4) Show/Hide password toggle */
+.password-toggle {
+  position: absolute;
+  right: 1rem; top: 50%;
+  transform: translateY(-50%);
+  background: none; border: none;
+  color: #ffc107; cursor: pointer;
+  font-size: 0.9rem;
+}
+
+/* 5) Full-width submit button */
+.auth-card .btn-primary {
+  width: 100%;
+  margin-top: 1rem;
+  transition: background-color 0.2s ease;
+}
+.auth-card .btn-primary:hover {
+  background-color: #0069d9;
+}
+
+/* 6) Headings in auth card */
+.auth-card h2 {
+  margin-bottom: 1rem;
+  color: #fff;
+  text-align: center;
+}
