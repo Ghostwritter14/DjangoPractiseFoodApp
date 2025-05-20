@@ -28,46 +28,121 @@ body, html {
     100% { background-image: url('images/img1.jpg'); }
 }
 
-.navbar {
-    backdrop-filter: blur(10px);
-    background-color: rgba(0, 0, 0, 0.5) !important;
-    transition: background-color 0.4s ease-in-out;
+/*.navbar {*/
+/*    backdrop-filter: blur(10px);*/
+/*    background-color: rgba(0, 0, 0, 0.5) !important;*/
+/*    transition: background-color 0.4s ease-in-out;*/
+/*}*/
+
+/*.navbar a.nav-link {*/
+/*    transition: color 0.3s ease;*/
+/*}*/
+/*.navbar a.nav-link:hover {*/
+/*    color: #ffc107; !* gold accent on hover *!*/
+/*}*/
+
+.header-container {
+  flex: 1;                      /* 1 portion */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  z-index: 1;
 }
 
-.navbar a.nav-link {
-    transition: color 0.3s ease;
-}
-.navbar a.nav-link:hover {
-    color: #ffc107; /* gold accent on hover */
-}
-
-/* === Card Nesting for Menu === */
-.outer-card {
-    background-color: rgba(255, 255, 255, 0.85);
-    border-radius: 15px;
-    padding: 2rem;
-    margin-bottom: 2rem;
-    box-shadow: 0 8px 24px rgba(0,0,0,0.2);
+.header-box {
+  width: 60%;
+  max-width: 600px;
+  aspect-ratio: 1 / 1;          /* square */
+  background: rgba(255, 255, 255, 0.85);
+  border-radius: 12px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+  text-align: center;
 }
 
-.inner-card {
-    border-radius: 12px;
-    margin: 1rem 0;
-    background-color: #fff;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+.main-content {
+  flex: 3;                      /* 3 portions */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  z-index: 1;
 }
 
-/* === Responsive Typography === */
-h1, h2, h3 {
-    color: #333;
+.main-box {
+  width: 80%;
+  max-width: 1000px;
+  height: 100%;
+  background: rgba(255, 255, 255, 0.9);
+  border-radius: 12px;
+  padding: 1.5rem;
+  overflow-y: auto;
+  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.1);
 }
 
-/* === Button Enhancements === */
-.btn {
-    transition: all 0.3s ease;
-}
-.btn:hover {
-    transform: scale(1.05);
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+.footer {
+  flex: 2;
+  width: 100%;
+  background-color: #212529;
+  color: #fff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 0.9rem;
+  position: relative;
+  z-index: 1;
 }
 
+.main-box .btn {
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+.main-box .btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+h1, h2, h3, h4 {
+  margin: 0;
+  color: #333;
+}
+
+.main-box h2 {
+  margin-bottom: 1.5rem;
+  font-weight: 600;
+  color: #222;
+}
+
+.main-box .row {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.main-box .row .col-md-4 {
+  background-color: rgba(255, 255, 255, 0.9);
+  padding: 1.25rem;
+  border-radius: 10px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+  flex: 1 1 250px;
+  max-width: 300px;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.main-box .row .col-md-4:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+}
+
+.main-box .row .col-md-4 h4 {
+  margin-bottom: 0.75rem;
+  color: #333;
+}
+
+.main-box .row .col-md-4 p {
+  color: #555;
+  line-height: 1.4;
+}

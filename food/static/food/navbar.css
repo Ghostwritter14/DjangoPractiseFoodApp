@@ -1,0 +1,33 @@
+.navbar {
+    backdrop-filter: blur(10px);
+    background-color: rgba(0, 0, 0, 0.5) !important;
+    transition: background-color 0.4s ease-in-out;
+    position: relative;
+    z-index: 1;
+}
+
+
+.navbar a.nav-link {
+    color: #fff;
+    transition: color 0.3s ease, background-color 0.3s ease;
+    border-radius: 4px;
+}
+
+
+.navbar a.nav-link:hover {
+    color: #ffc107;
+    text-decoration: none;
+}
+
+
+.navbar a.nav-link:focus {
+    outline: 3px solid #ffc107;
+    outline-offset: 2px;
+    background-color: rgba(255, 193, 7, 0.1);
+}
+
+
+.navbar .nav-item.active .nav-link,
+.navbar a.nav-link.active {
+    color: #ffd54f;
+}
