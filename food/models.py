@@ -4,6 +4,13 @@ from django.urls import reverse
 
 
 # Create your models here.
+class Category(models.Model):
+    name = models.CharField(max_length=50, unique=True)
+    slug = models.SlugField(max_length=50, unique=True)
+
+    def __str__(self):
+        return self.name
+
 class Item(models.Model):
     def __str__(self):
         return self.item_name
@@ -15,6 +22,18 @@ class Item(models.Model):
     item_image = models.CharField(max_length=500,
                                   default="https://www.thefuzzyduck.co.uk/wp-content/uploads/2024/05/image-coming"
                                           "-soon-placeholder-01-660x660.png")
+
+    category = models.ForeignKey(
+        Category,
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True,
+        related_name='items'
+    )
+    ingredients = models.TextField(
+        blank=True,
+        help_text="Comma-separate the ingredients"
+    )
 
     def get_absolute_url(self):
         return reverse('food:detail', kwargs={'pk': self.pk})

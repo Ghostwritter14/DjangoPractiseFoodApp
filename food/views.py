@@ -39,13 +39,28 @@ def edit_item(request, item_id):
 
 class CreateItem(CreateView):
     model = Item
-    fields = ['item_name', 'item_description', 'item_price', 'item_image']
+    fields = ['item_name', 'item_description', 'item_price', 'item_image', 'category', 'ingredients']
     template_name = 'food/item_form.html'
 
     def form_valid(self, form):
         form.instance.user_name = self.request.user
         return super().form_valid(form)
 
+
+class CategoryView(ListView):
+    model = Item
+    template_name = 'food/index.html'
+    context_object_name = 'item_list'
+
+    def get_queryset(self):
+        # no items stored yet
+        return Item.objects.none()
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        # pass the slug so the template can show a header
+        context['category_name'] = self.kwargs['category'].capitalize()
+        return context
 
 def delete_item(request, item_id):
     item = Item.objects.get(id=item_id)
