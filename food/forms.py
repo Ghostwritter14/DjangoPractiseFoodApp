@@ -1,5 +1,5 @@
 from django import forms
-from .models import Item
+from .models import Item, CustomCombo
 
 
 class ItemForm(forms.ModelForm):
@@ -26,3 +26,27 @@ class ItemForm(forms.ModelForm):
                 'placeholder': 'Enter ingredients, separated by commas'
             }),
         }
+
+
+class CustomComboForm(forms.ModelForm):
+    items = forms.ModelMultipleChoiceField(
+        queryset=Item.objects.all(),
+        widget=forms.CheckboxSelectMultiple(),
+        help_text="Pick up to 3 items from the menu"
+    )
+
+    class Meta:
+        model = CustomCombo
+        fields = ['name', 'items']
+        widgets = {
+            'name': forms.TextInput(attrs={
+                'class': 'form-control',
+                'placeholder': 'Combo name'
+            }),
+        }
+
+    def clean_items(self):
+        items = self.cleaned_data['items']
+        if items.count() > 3:
+            raise forms.ValidationError("You can select at most 3 items.")
+        return items

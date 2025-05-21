@@ -52,6 +52,14 @@ class CreateItem(CreateView):
     fields = ['item_name', 'item_description', 'item_price', 'item_image', 'category', 'ingredients']
     template_name = 'food/item_form.html'
 
+    def get_initial(self):
+        initial = super().get_initial()
+        slug = self.request.GET.get('category')
+        if slug:
+            cat = get_object_or_404(Category, slug=slug)
+            initial['category'] = cat.pk
+        return initial
+
     def form_valid(self, form):
         form.instance.user_name = self.request.user
         return super().form_valid(form)
