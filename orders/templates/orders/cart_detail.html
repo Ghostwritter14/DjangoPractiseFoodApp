@@ -1,0 +1,52 @@
+{% extends "food/base.html" %}
+{% block content %}
+<div class="container mt-4">
+  <h2>Your Cart</h2>
+
+  {% if cart_items %}
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Item</th><th>Qty</th><th>Subtotal</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for row in cart_items %}
+          <tr>
+            <td>{{ row.item.item_name }}</td>
+            <td>{{ row.quantity }}</td>
+            <td>£{{ row.subtotal }}</td>
+          </tr>
+        {% endfor %}
+      </tbody>
+      <tfoot>
+        <tr>
+          <th colspan="2" class="text-end">Total</th>
+          <th>£{{ total }}</th>
+        </tr>
+      </tfoot>
+    </table>
+
+    <div class="d-flex gap-2">
+      <!-- 1) Return to Menu -->
+      <a href="{% url 'food:index' %}" class="btn btn-secondary">
+        Return to Menu
+      </a>
+
+      <!-- 2) Finish Order (POST) -->
+      <form method="post" action="{% url 'orders:checkout' %}">
+        {% csrf_token %}
+        <button type="submit" class="btn btn-primary">
+          Finish Order
+        </button>
+      </form>
+    </div>
+
+  {% else %}
+    <p>Your cart is empty.</p>
+    <a href="{% url 'food:index' %}" class="btn btn-primary">
+      Back to Menu
+    </a>
+  {% endif %}
+</div>
+{% endblock %}

@@ -1,146 +1,3 @@
-{#{% load static %}#}
-{#<!DOCTYPE html>#}
-{#<html lang="en">#}
-{#<head>#}
-{#  <meta charset="UTF-8">#}
-{#  <title>{% block title %}Food App{% endblock %}</title>#}
-{##}
-{#  <!-- Bootstrap CSS (site-wide) -->#}
-{#  <link#}
-{#    href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"#}
-{#    rel="stylesheet">#}
-{#  <!-- Navbar styling -->#}
-{#  <link rel="stylesheet" href="{% static 'food/navbar.css' %}">#}
-{#  <!-- Global button styling -->#}
-{#  <link rel="stylesheet" href="{% static 'food/buttons.css' %}">#}
-{##}
-{#  <!-- Page-specific extra styles -->#}
-{#  {% block extra_styles %}{% endblock %}#}
-{#</head>#}
-{#<body>#}
-{##}
-{#  <!-- ============================#}
-{#       NAVBAR (always present)#}
-{#       ============================ -->#}
-{#  <nav class="navbar navbar-dark bg-dark navbar-expand-lg">#}
-{#    <div class="container-fluid">#}
-{#      <a class="navbar-brand" href="{% url 'landing' %}">Food App</a>#}
-{#      <button class="navbar-toggler" type="button"#}
-{#              data-bs-toggle="collapse" data-bs-target="#navbarNav">#}
-{#        <span class="navbar-toggler-icon"></span>#}
-{#      </button>#}
-{##}
-{#      <div class="collapse navbar-collapse" id="navbarNav">#}
-{#        <ul class="navbar-nav ms-auto">#}
-{##}
-{#          <!-- ============================#}
-{#               DROPDOWN: View Categories#}
-{#               ============================ -->#}
-{#          <li class="nav-item dropdown">#}
-{#            <a class="nav-link dropdown-toggle"#}
-{#               href="#" id="categoriesMenu"#}
-{#               role="button" data-bs-toggle="dropdown"#}
-{#               aria-expanded="false">#}
-{#              View Categories#}
-{#            </a>#}
-{#            <ul class="dropdown-menu dropdown-menu-end"#}
-{#                aria-labelledby="categoriesMenu">#}
-{#              <li><a class="dropdown-item" href="{% url 'food:category' 'drinks' %}">Drinks</a></li>#}
-{#              <li><h6 class="dropdown-header">Main</h6></li>#}
-{#              <li><a class="dropdown-item" href="{% url 'food:category' 'italian' %}">Italian</a></li>#}
-{#              <li><a class="dropdown-item" href="{% url 'food:category' 'american' %}">American</a></li>#}
-{#              <li><a class="dropdown-item" href="{% url 'food:category' 'indian' %}">Indian</a></li>#}
-{#              <li><a class="dropdown-item" href="{% url 'food:category' 'chinese' %}">Chinese</a></li>#}
-{#              <li><a class="dropdown-item" href="{% url 'food:category' 'japanese' %}">Japanese</a></li>#}
-{#              <li><hr class="dropdown-divider"></li>#}
-{#              <li><a class="dropdown-item" href="{% url 'food:category' 'deserts' %}">Deserts</a></li>#}
-{#            </ul>#}
-{#          </li>#}
-{##}
-{#          <!-- ============================#}
-{#               "Add Item" (superusers only)#}
-{#               ============================ -->#}
-{#          {% if user.is_superuser %}#}
-{#          <li class="nav-item">#}
-{#            <a class="nav-link"#}
-{#               href="{% url 'food:create_item' %}">#}
-{#              Add Item#}
-{#            </a>#}
-{#          </li>#}
-{#          {% endif %}#}
-{##}
-{#          <!-- ============================#}
-{#               LOGIN / USER GREETING & LOGOUT#}
-{#               ============================ -->#}
-{#          {% if user.is_authenticated %}#}
-{#            <li class="nav-item dropdown">#}
-{#              <a class="nav-link dropdown-toggle"#}
-{#                 href="#" id="userMenu"#}
-{#                 role="button" data-bs-toggle="dropdown"#}
-{#                 aria-expanded="false">#}
-{#                Hi {{ user.username }}#}
-{#              </a>#}
-{#              <ul class="dropdown-menu dropdown-menu-end"#}
-{#                  aria-labelledby="userMenu">#}
-{#                <li>#}
-{#                  <a class="dropdown-item" href="{% url 'profile' %}">#}
-{#                    Profile#}
-{#                  </a>#}
-{#                </li>#}
-{#                <li><hr class="dropdown-divider"></li>#}
-{#                <li>#}
-{#                  <form method="post" action="{% url 'logout' %}" class="m-0">#}
-{#                    {% csrf_token %}#}
-{#                    <button type="submit" class="dropdown-item">#}
-{#                      Logout#}
-{#                    </button>#}
-{#                  </form>#}
-{#                </li>#}
-{#              </ul>#}
-{#            </li>#}
-{#          {% else %}#}
-{#            <li class="nav-item">#}
-{#              <a class="nav-link" href="{% url 'login' %}">#}
-{#                Login#}
-{#              </a>#}
-{#            </li>#}
-{#          {% endif %}#}
-{##}
-{#        </ul>#}
-{#      </div>#}
-{#    </div>#}
-{#  </nav>#}
-{##}
-{#  <!-- ============================#}
-{#       FLASH MESSAGES#}
-{#       ============================ -->#}
-{#  {% if messages %}#}
-{#    <div class="container mt-3">#}
-{#      {% for message in messages %}#}
-{#        <div class="alert alert-{{ message.tags }}">#}
-{#          {{ message }}#}
-{#        </div>#}
-{#      {% endfor %}#}
-{#    </div>#}
-{#  {% endif %}#}
-{##}
-{#  <!-- ============================#}
-{#       MAIN CONTENT#}
-{#       Supports both block content & old block body#}
-{#       ============================ -->#}
-{#  <main class="flex-grow-1">#}
-{#    {% block content %}#}
-{#      {% block body %}{% endblock %}#}
-{#    {% endblock %}#}
-{#  </main>#}
-{##}
-{#  <!-- Bootstrap JS (site-wide) -->#}
-{#  <script#}
-{#    src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js">#}
-{#  </script>#}
-{#</body>#}
-{#</html>#}
-
 {% load static %}
 <!DOCTYPE html>
 <html lang="en">
@@ -160,6 +17,13 @@
   {% block extra_styles %}{% endblock %}
 </head>
 <body>
+  <!-- Toast container (for cart/toast messages) -->
+  <div aria-live="polite" aria-atomic="true" class="position-relative">
+    <div id="toast-container"
+         class="toast-container position-fixed top-0 end-0 p-3">
+    </div>
+  </div>
+
   <!-- NAVBAR -->
   <nav class="navbar navbar-dark bg-dark navbar-expand-lg">
     <div class="container-fluid">
@@ -172,14 +36,14 @@
       <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav ms-auto">
 
-          <!-- New: Menu link -->
+          <!-- Menu link -->
           <li class="nav-item">
             <a class="nav-link" href="{% url 'food:index' %}">
               Menu
             </a>
           </li>
 
-          <!-- View Categories dropdown -->
+          <!-- Categories dropdown -->
           <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle"
                href="#" id="categoriesMenu"
@@ -189,15 +53,22 @@
             </a>
             <ul class="dropdown-menu dropdown-menu-end"
                 aria-labelledby="categoriesMenu">
-              <li><a class="dropdown-item" href="{% url 'food:category' 'drinks' %}">Drinks</a></li>
+              <li><a class="dropdown-item"
+                     href="{% url 'food:category' 'drinks' %}">Drinks</a></li>
               <li><h6 class="dropdown-header">Main</h6></li>
-              <li><a class="dropdown-item" href="{% url 'food:category' 'italian' %}">Italian</a></li>
-              <li><a class="dropdown-item" href="{% url 'food:category' 'american' %}">American</a></li>
-              <li><a class="dropdown-item" href="{% url 'food:category' 'indian' %}">Indian</a></li>
-              <li><a class="dropdown-item" href="{% url 'food:category' 'chinese' %}">Chinese</a></li>
-              <li><a class="dropdown-item" href="{% url 'food:category' 'japanese' %}">Japanese</a></li>
+              <li><a class="dropdown-item"
+                     href="{% url 'food:category' 'italian' %}">Italian</a></li>
+              <li><a class="dropdown-item"
+                     href="{% url 'food:category' 'american' %}">American</a></li>
+              <li><a class="dropdown-item"
+                     href="{% url 'food:category' 'indian' %}">Indian</a></li>
+              <li><a class="dropdown-item"
+                     href="{% url 'food:category' 'chinese' %}">Chinese</a></li>
+              <li><a class="dropdown-item"
+                     href="{% url 'food:category' 'japanese' %}">Japanese</a></li>
               <li><hr class="dropdown-divider"></li>
-              <li><a class="dropdown-item" href="{% url 'food:category' 'deserts' %}">Deserts</a></li>
+              <li><a class="dropdown-item"
+                     href="{% url 'food:category' 'deserts' %}">Deserts</a></li>
             </ul>
           </li>
 
@@ -210,7 +81,19 @@
           </li>
           {% endif %}
 
-          <!-- Auth / Greeting / Logout -->
+          <!-- Cart link -->
+          {% if user.is_authenticated %}
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'orders:cart_detail' %}">
+              Cart
+              {% if request.session.cart %}
+                ({{ request.session.cart|length }})
+              {% endif %}
+            </a>
+          </li>
+          {% endif %}
+
+          <!-- User dropdown / Login -->
           {% if user.is_authenticated %}
             <li class="nav-item dropdown">
               <a class="nav-link dropdown-toggle"
@@ -230,7 +113,9 @@
                 <li>
                   <form method="post" action="{% url 'logout' %}" class="m-0">
                     {% csrf_token %}
-                    <button type="submit" class="dropdown-item">Logout</button>
+                    <button type="submit" class="dropdown-item">
+                      Logout
+                    </button>
                   </form>
                 </li>
               </ul>
@@ -246,7 +131,7 @@
     </div>
   </nav>
 
-  <!-- Flash messages -->
+  <!-- Flash messages (fallback) -->
   {% if messages %}
     <div class="container mt-3">
       {% for message in messages %}
@@ -255,7 +140,7 @@
     </div>
   {% endif %}
 
-  <!-- Main content blocks -->
+  <!-- Main content -->
   <main class="flex-grow-1">
     {% block content %}
       {% block body %}{% endblock %}
@@ -266,9 +151,30 @@
   <script
     src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js">
   </script>
+
+  <!-- Toast script -->
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      {% for message in messages %}
+        const toastEl = document.createElement('div');
+        toastEl.className = 'toast align-items-center text-bg-primary border-0';
+        toastEl.role = 'alert';
+        toastEl.ariaLive = 'assertive';
+        toastEl.ariaAtomic = 'true';
+        toastEl.innerHTML = `
+          <div class="d-flex">
+            <div class="toast-body">
+              {{ message|escapejs }}
+            </div>
+            <button type="button"
+                    class="btn-close btn-close-white me-2 m-auto"
+                    data-bs-dismiss="toast"
+                    aria-label="Close"></button>
+          </div>`;
+        document.getElementById('toast-container').append(toastEl);
+        new bootstrap.Toast(toastEl, { delay: 2000 }).show();
+      {% endfor %}
+    });
+  </script>
 </body>
 </html>
-
-
-
-

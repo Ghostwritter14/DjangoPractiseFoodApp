@@ -9,43 +9,6 @@
     <title>Document</title>
 </head>
 <body>
-{#{% block body %}#}
-{#    <div class="container mt-4">#}
-{#    {% if category_name %}#}
-{#      <h2 class="mb-4">{{ category_name }}</h2>#}
-{#    {% endif %}#}
-{#    {% for item in item_list %}#}
-{#    <div class="card mb-3">#}
-{#        <div class="row g-0 align-items-center">#}
-{##}
-{#            <div class="col-md-4">#}
-{#                <img src="{{ item.item_image }}" class="img-fluid rounded-start" alt="{{ item.item_name }}">#}
-{#            </div>#}
-{##}
-{##}
-{#            <div class="col-md-6">#}
-{#                <div class="card-body">#}
-{#                    <h5 class="card-title">{{ item.item_name }}</h5>#}
-{#                    <p class="card-text">{{ item.item_description }}</p>#}
-{#                    <p class="card-text"><strong>£{{ item.item_price }}</strong></p>#}
-{#                </div>#}
-{#            </div>#}
-{##}
-{##}
-{#            <div class="col-md-2 text-center">#}
-{#                <a href="{% url 'food:detail' item.id %}" class="btn btn-success mt-3">#}
-{#                    Details#}
-{#                </a>#}
-{#            </div>#}
-{#            <form method="post" action="{% url 'orders:add_item' item.id %}">#}
-{#                {% csrf_token %}#}
-{#                <button class="btn btn-success mt-2">Order Now</button>#}
-{#            </form>#}
-{#        </div>#}
-{#    </div>#}
-{#    {% endfor %}#}
-{#</div>#}
-{#{% endblock %}#}
 {% block body %}
   <div class="container mt-4">
     {% if category_name %}
@@ -77,14 +40,20 @@
           </div>
 
           <div class="col-md-2 text-center">
-            <form method="post" action="{% url 'orders:add_item' item.id %}">
+            <form method="post" action="{% url 'orders:add_to_cart' item.id %}">
               {% csrf_token %}
               <button type="submit"
                       class="btn btn-primary mt-3">
-                Order Now
+                Add to Cart
               </button>
             </form>
           </div>
+
+            {% empty %}
+            <div class="alert alert-warning text-center">
+                No menu items available!
+            </div>
+
 
         </div>
       </div>
@@ -93,3 +62,52 @@
 {% endblock %}
 </body>
 </html>
+{#{% extends 'food/base.html' %}#}
+{#{% block body %}#}
+{#<div class="container mt-4">#}
+{#  {% if category_name %}#}
+{#    <h2 class="mb-4">{{ category_name }}</h2>#}
+{#  {% endif %}#}
+{##}
+{#  {% for item in item_list %}#}
+{#    <div class="card mb-3">#}
+{#      <div class="row g-0 align-items-center">#}
+{#        <!-- Image -->#}
+{#        <div class="col-md-4">#}
+{#          <img src="{{ item.item_image }}"#}
+{#               class="img-fluid rounded-start"#}
+{#               alt="{{ item.item_name }}">#}
+{#        </div>#}
+{##}
+{#        <!-- Details -->#}
+{#        <div class="col-md-4">#}
+{#          <div class="card-body">#}
+{#            <h5 class="card-title">{{ item.item_name }}</h5>#}
+{#            <p class="card-text">{{ item.item_description }}</p>#}
+{#            <p class="card-text"><strong>£{{ item.item_price }}</strong></p>#}
+{#          </div>#}
+{#        </div>#}
+{##}
+{#        <!-- Detail button -->#}
+{#        <div class="col-md-2 text-center">#}
+{#          <a href="{% url 'food:detail' item.id %}"#}
+{#             class="btn btn-outline-secondary mt-3">#}
+{#            Details#}
+{#          </a>#}
+{#        </div>#}
+{##}
+{#        <!-- Add to Cart button -->#}
+{#        <div class="col-md-2 text-center">#}
+{#          <form method="post" action="{% url 'orders:add_to_cart' item.id %}">#}
+{#            {% csrf_token %}#}
+{#            <button type="submit"#}
+{#                    class="btn btn-primary mt-3">#}
+{#              Add to Cart#}
+{#            </button>#}
+{#          </form>#}
+{#        </div>#}
+{#      </div>#}
+{#    </div>#}
+{#  {% endfor %}#}
+{#</div>#}
+{#{% endblock %}#}

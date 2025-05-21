@@ -2,11 +2,8 @@
 {% load static %}
 
 {% block extra_styles %}
-  <!-- Rotating blurred background & glass-card base styles -->
   <link rel="stylesheet" href="{% static 'food/style.css' %}">
-
   <style>
-    /* ===== Profile Card ===== */
     .profile-card {
       position: relative;
       width: 90vw;
@@ -97,6 +94,9 @@
     .combo-card small {
       color: #ddd;
     }
+    .combo-card form {
+      margin-top: 0.5rem;
+    }
   </style>
 {% endblock %}
 
@@ -122,7 +122,7 @@
     <!-- Favorite Category -->
     <div class="favorite-display">
       {% if editing_fav %}
-        <form method="post" class="d-flex align-items-center gap-2">
+        <form method="post" class="d-flex gap-2 align-items-center">
           {% csrf_token %}
           <select name="favorite" class="form-select">
             <option value="">— select your favorite —</option>
@@ -152,20 +152,19 @@
         {% csrf_token %}
         {{ combo_form.non_field_errors }}
 
-        <!-- Combo Name -->
+        <!-- Name -->
         <div>
           {{ combo_form.name.label_tag }}
           {{ combo_form.name }}
         </div>
 
-        <!-- Items Checkboxes -->
+        <!-- Items (checkboxes) -->
         <div>
           <label class="form-label">{{ combo_form.items.label }}</label>
           {% for checkbox in combo_form.items %}
             <div class="form-check">
               {{ checkbox.tag }}
-              <label class="form-check-label"
-                     for="{{ checkbox.id_for_label }}">
+              <label class="form-check-label" for="{{ checkbox.id_for_label }}">
                 {{ checkbox.choice_label }}
               </label>
             </div>
@@ -184,24 +183,26 @@
       </form>
     </div>
 
-    <!-- Saved Combos -->
+    <!-- Display Saved Combos with “Add Combo to Cart” buttons -->
     <div class="combos-row">
       {% for combo in combos %}
         <div class="combo-card">
           <h5>{{ combo.name }}</h5>
-          <ul class="list-unstyled">
+          <ul class="list-unstyled mb-2">
             {% for item in combo.items.all %}
               <li>• {{ item.item_name }}</li>
             {% endfor %}
           </ul>
           <small>Created {{ combo.created_at|date:"M j, Y" }}</small>
 
-            <form method="post" action="{% url 'orders:add_combo' combo.id %}">
+          <form method="post"
+                action="{% url 'orders:add_combo_to_cart' combo.id %}">
             {% csrf_token %}
-                <button class="btn btn-primary btn-sm mt-2">
-                    Order Combo
-                </button>
-            </form>
+            <button type="submit"
+                    class="btn btn-primary btn-sm">
+              Add Combo to Cart
+            </button>
+          </form>
         </div>
       {% empty %}
         <p class="text-muted mt-2">
@@ -211,6 +212,3 @@
     </div>
   </div>
 {% endblock %}
-
-
-
