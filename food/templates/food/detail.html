@@ -16,46 +16,64 @@
 {#    </div>#}
 {##}
 {#{% endblock %}#}
-
 {% extends 'food/base.html' %}
+{% load static %}
 
-{% block body %}
-<div class="container mt-4">
+{% block content %}
+  <div class="container mt-4">
     <div class="card mb-3">
-        <div class="row g-0 align-items-center">
+      <div class="row g-0">
 
-            <div class="col-md-4">
-                <img src="{{ item.item_image }}" class="img-fluid rounded-start" alt="{{ item.item_name }}">
-            </div>
-
-            <div class="col-md-6">
-                <div class="card-body">
-                    <h5 class="card-title">{{ item.item_name }}</h5>
-                    <p class="card-text">{{ item.item_description }}</p>
-                    <p class="card-text"><strong>£{{ item.item_price }}</strong></p>
-                </div>
-            </div>
-
-            <div class="col-md-2 text-center">
-                <a href="{% url 'food:menu' %}" class="btn btn-secondary mt-3">
-                    Back to List
-                </a>
-            </div>
+        <!-- Image -->
+        <div class="col-md-4">
+          <img src="{{ item.item_image }}"
+               class="img-fluid rounded-start"
+               alt="{{ item.item_name }}">
         </div>
-    </div>
-    {% if user.is_superuser %}
-      <div class="mt-3">
-        <a href="{% url 'food:edit_item' object.id %}" class="btn btn-warning">
-          Edit
-        </a>
-        <form method="post" action="{% url 'food:delete_item' object.id %}"
-              class="d-inline">
-          {% csrf_token %}
-          <button type="submit" class="btn btn-danger">
-            Delete
-          </button>
-        </form>
+
+        <!-- Main Details -->
+        <div class="col-md-8">
+          <div class="card-body">
+            <h3 class="card-title">{{ item.item_name }}</h3>
+            <p class="card-text">{{ item.item_description }}</p>
+            <p class="card-text"><strong>£{{ item.item_price }}</strong></p>
+
+            <p class="card-text">
+              <strong>Category:</strong>
+              {{ item.category.name|default:"Uncategorized" }}
+            </p>
+
+            <h5 class="mt-4">Ingredients</h5>
+            <ul class="list-unstyled mb-0">
+              {% if ingredients_list %}
+                {% for ing in ingredients_list %}
+                  <li>• {{ ing }}</li>
+                {% endfor %}
+              {% else %}
+                <li><em>No ingredients listed.</em></li>
+              {% endif %}
+            </ul>
+          </div>
+
+          {% if user.is_superuser %}
+            <div class="card-footer bg-transparent border-0 text-end">
+              <a href="{% url 'food:edit_item' item.id %}"
+                 class="btn btn-warning me-2">
+                Edit
+              </a>
+              <form method="post"
+                    action="{% url 'food:delete_item' item.id %}"
+                    class="d-inline">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-danger">
+                  Delete
+                </button>
+              </form>
+            </div>
+          {% endif %}
+
+        </div>
       </div>
-    {% endif %}
-</div>
+    </div>
+  </div>
 {% endblock %}

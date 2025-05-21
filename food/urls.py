@@ -5,6 +5,7 @@ from .views import LandingPageView
 
 app_name = 'food'
 urlpatterns = [
+    path('category/<slug:category>/', views.CategoryView.as_view(), name='category'),
     path('menu', views.IndexClassView.as_view(), name='menu'),
     # food
     path('<int:pk>/', views.DetailClassView.as_view(), name='detail'),
