@@ -195,6 +195,13 @@
             {% endfor %}
           </ul>
           <small>Created {{ combo.created_at|date:"M j, Y" }}</small>
+
+            <form method="post" action="{% url 'orders:add_combo' combo.id %}">
+            {% csrf_token %}
+                <button class="btn btn-primary btn-sm mt-2">
+                    Order Combo
+                </button>
+            </form>
         </div>
       {% empty %}
         <p class="text-muted mt-2">
