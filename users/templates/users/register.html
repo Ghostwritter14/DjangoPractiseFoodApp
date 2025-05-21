@@ -1,3 +1,50 @@
+{#{% extends "food/base.html" %}#}
+{#{% load static %}#}
+{##}
+{#{% block extra_styles %}#}
+{#  <link rel="stylesheet" href="{% static 'food/style.css' %}">#}
+{#  <link rel="stylesheet" href="{% static 'users/style.css' %}">#}
+{#{% endblock %}#}
+{##}
+{#{% block title %}Register – Food App{% endblock %}#}
+{##}
+{#{% block body %}#}
+{##}
+{#  <div class="background"></div>#}
+{##}
+{##}
+{#  <div class="auth-card">#}
+{#    <h2>Register</h2>#}
+{#    <form method="post">#}
+{#      {% csrf_token %}#}
+{##}
+{#      {% for field in form %}#}
+{#        <div class="mb-3">#}
+{#          {{ field.label_tag }}#}
+{#          {{ field }}#}
+{#           {% if field.help_text %}#}
+{#            <small class="form-text text-muted">{{ field.help_text }}</small>#}
+{#          {% endif %}#}
+{#          {% if field.errors %}#}
+{#            <div class="text-danger small">{{ field.errors }}</div>#}
+{#          {% endif %}#}
+{#        </div>#}
+{#      {% endfor %}#}
+{##}
+{#      <button type="submit" class="btn btn-primary w-100">Sign Up</button>#}
+{#    </form>#}
+{##}
+{##}
+{#    <hr class="my-3" style="border-color: rgba(255,255,255,0.3);">#}
+{#    <div class="text-center">#}
+{#      <small>Already have an account?</small>#}
+{#      <a href="{% url 'login' %}" class="btn btn-outline-light btn-sm ms-2">#}
+{#        Login#}
+{#      </a>#}
+{#    </div>#}
+{#  </div>#}
+{#{% endblock %}#}
+
 {% extends "food/base.html" %}
 {% load static %}
 
@@ -9,36 +56,119 @@
 {% block title %}Register – Food App{% endblock %}
 
 {% block body %}
-
   <div class="background"></div>
-
-
   <div class="auth-card">
     <h2>Register</h2>
     <form method="post">
       {% csrf_token %}
 
-      {% for field in form %}
+      <!-- Username -->
+      <div class="mb-3">
+        {{ form.username.label_tag }}
+        {{ form.username }}
+        {% if form.username.help_text %}
+          <small class="form-text">
+            <strong>{{ form.username.help_text }}</strong>
+          </small>
+        {% endif %}
+        {% if form.username.errors %}
+          <div class="text-danger small">{{ form.username.errors }}</div>
+        {% endif %}
+      </div>
+
+      <!-- Email -->
+      <div class="mb-3">
+        {{ form.email.label_tag }}
+        {{ form.email }}
+        {% if form.email.help_text %}
+          <small class="form-text">
+            <strong>{{ form.email.help_text }}</strong>
+          </small>
+        {% endif %}
+        {% if form.email.errors %}
+          <div class="text-danger small">{{ form.email.errors }}</div>
+        {% endif %}
+      </div>
+
+      <!-- Address (if present) -->
+      {% if form.address %}
         <div class="mb-3">
-          {{ field.label_tag }}
-          {{ field }}
-          {% if field.errors %}
-            <div class="text-danger small">{{ field.errors }}</div>
+          {{ form.address.label_tag }}
+          {{ form.address }}
+          {% if form.address.help_text %}
+            <small class="form-text">
+              <strong>{{ form.address.help_text }}</strong>
+            </small>
+          {% endif %}
+          {% if form.address.errors %}
+            <div class="text-danger small">{{ form.address.errors }}</div>
           {% endif %}
         </div>
-      {% endfor %}
+      {% endif %}
+
+      <!-- Password1 -->
+      <div class="mb-3 position-relative">
+        {{ form.password1.label_tag }}
+        {{ form.password1 }}
+        <button type="button"
+                class="password-toggle"
+                onclick="togglePassword('id_password1')">
+          Show
+        </button>
+        {% if form.password1.help_text %}
+          <small class="form-text">
+            <strong>{{ form.password1.help_text }}</strong>
+          </small>
+        {% endif %}
+        {% if form.password1.errors %}
+          <div class="text-danger small">{{ form.password1.errors }}</div>
+        {% endif %}
+      </div>
+
+      <!-- Password2 -->
+      <div class="mb-3 position-relative">
+        {{ form.password2.label_tag }}
+        {{ form.password2 }}
+        <button type="button"
+                class="password-toggle"
+                onclick="togglePassword('id_password2')">
+          Show
+        </button>
+        {% if form.password2.help_text %}
+          <small class="form-text">
+            <strong>{{ form.password2.help_text }}</strong>
+          </small>
+        {% endif %}
+        {% if form.password2.errors %}
+          <div class="text-danger small">{{ form.password2.errors }}</div>
+        {% endif %}
+      </div>
 
       <button type="submit" class="btn btn-primary w-100">Sign Up</button>
     </form>
 
-
     <hr class="my-3" style="border-color: rgba(255,255,255,0.3);">
     <div class="text-center">
       <small>Already have an account?</small>
-      <a href="{% url 'login' %}" class="btn btn-outline-light btn-sm ms-2">
+      <a href="{% url 'login' %}"
+         class="btn btn-outline-light btn-sm ms-2">
         Login
       </a>
     </div>
   </div>
+
+  <script>
+    function togglePassword(fieldId) {
+      const fld = document.getElementById(fieldId);
+      const btn = document.querySelector(`[onclick="togglePassword('${fieldId}')"]`);
+      if (fld.type === 'password') {
+        fld.type = 'text'; btn.textContent = 'Hide';
+      } else {
+        fld.type = 'password'; btn.textContent = 'Show';
+      }
+    }
+  </script>
 {% endblock %}
+
+
 

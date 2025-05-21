@@ -54,12 +54,22 @@ body, html {
   font-weight: 500;
 }
 
-/* Inputs fill the container exactly */
+
+/*.auth-card .form-control {*/
+/*  display: block;*/
+/*  width: 100%;*/
+/*  padding: 0.5rem;*/
+/*  padding-right: 3rem;*/
+/*  border-radius: 4px;*/
+/*  box-sizing: border-box;*/
+/*}*/
+
 .auth-card .form-control {
-  display: block;
-  width: 100%;
-  padding: 0.5rem;
-  border-radius: 4px;
+  font-size: 1rem;
+  line-height: 1.5;
+  height: calc(1.5em + 1rem);
+  padding: 0.5rem 0.5rem 0.5rem 0.75rem;
+  padding-right: 3rem;
   box-sizing: border-box;
 }
 
@@ -78,6 +88,20 @@ body, html {
   font-size: 0.9rem;
 }
 
+.auth-card .position-relative .password-toggle {
+  position: absolute;
+  right: 0.75rem;                       /* from the right edge */
+  top: 0; bottom: 0; margin: auto 0;    /* vertically centered */
+  font-size: 0.9rem;
+  line-height: 1.5;                     /* match input’s line-height */
+  background: none;
+  border: none;
+  color: #ffc107;
+  cursor: pointer;
+  z-index: 2;                           /* above the input */
+  padding: 0;
+}
+
 /* 5) Full-width submit button */
 .auth-card .btn-primary {
   width: 100%;
@@ -88,9 +112,27 @@ body, html {
   background-color: #0069d9;
 }
 
-/* 6) Headings in auth card */
+
 .auth-card h2 {
   margin-bottom: 1rem;
   color: #fff;
   text-align: center;
+}
+
+.auth-card small.form-text {
+  display: block;
+  color: rgba(255, 255, 255, 0.9) !important;
+  font-weight: bold;
+  margin-top: 0.25rem;
+}
+.auth-card .text-danger {
+  color: #ff6b6b !important;
+}
+
+.auth-card label {
+  color: #fff;
+}
+
+.password-toggle {
+  color: #ffc107;
 }
