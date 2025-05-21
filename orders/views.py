@@ -17,27 +17,27 @@ def add_to_cart(request, item_id):
     item = get_object_or_404(Item, pk=item_id)
     cart = request.session.get('cart', {})
 
-    # increment quantity
     cart[str(item_id)] = cart.get(str(item_id), 0) + 1
     request.session['cart'] = cart
 
     messages.success(request, f"Added {item.item_name} to cart.")
-    # redirect back to the page they were on
-    return redirect(request.META.get('HTTP_REFERER','food:index'))
+
+    return redirect(request.META.get('HTTP_REFERER', 'food:index'))
+
 
 @login_required
 def add_combo_to_cart(request, combo_id):
     combo = get_object_or_404(CustomCombo, pk=combo_id, user=request.user)
     cart = request.session.get('cart', {})
 
-    # add each item in the combo once
     for itm in combo.items.all():
         key = str(itm.id)
         cart[key] = cart.get(key, 0) + 1
 
     request.session['cart'] = cart
     messages.success(request, f"Added combo “{combo.name}” to cart.")
-    return redirect(request.META.get('HTTP_REFERER','profile'))
+    return redirect(request.META.get('HTTP_REFERER', 'profile'))
+
 
 @login_required
 def cart_detail(request):
@@ -60,15 +60,26 @@ def cart_detail(request):
         'total': total
     })
 
+
+@login_required
+def remove_from_cart(request, item_id):
+    cart = request.session.get('cart', {})
+    key = str(item_id)
+    if key in cart:
+        del cart[key]
+        request.session['cart'] = cart
+        messages.success(request, "Removed item from cart.")
+    return redirect('orders:cart_detail')
+
+
 @login_required
 def order_detail(request, order_id):
-    # Fetch the order, ensure it belongs to the current user
     order = get_object_or_404(Order, pk=order_id, user=request.user)
 
-    # Render the detail template, passing the Order instance
     return render(request, 'orders/order_detail.html', {
         'order': order
     })
+
 
 @login_required
 @require_POST
@@ -87,22 +98,19 @@ def checkout(request):
     messages.success(request, f"Order #{order.id} placed!")
     return redirect('orders:detail', order.id)
 
+
 @login_required
 def invoice(request, order_id):
-    # 1) Load the order, ensure it belongs to this user
     order = get_object_or_404(Order, pk=order_id, user=request.user)
 
-    # 2) Build a dummy “PAY://” QR payload
     payload = f"PAY://ORDER/{order.id}/AMT/{order.total_price:.2f}"
-    qr_img  = qrcode.make(payload)
+    qr_img = qrcode.make(payload)
 
-    # 3) Encode to base64 so we can inline it in HTML
     buffer = io.BytesIO()
     qr_img.save(buffer, format='PNG')
     qr_b64 = base64.b64encode(buffer.getvalue()).decode()
 
-    # 4) Render the invoice template
     return render(request, 'orders/invoice.html', {
-        'order':    order,
-        'qr_code':  qr_b64,
+        'order': order,
+        'qr_code': qr_b64,
     })
