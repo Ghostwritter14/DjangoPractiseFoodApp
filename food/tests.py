@@ -4,17 +4,15 @@ from django.urls import reverse
 from django.contrib.auth.models import User
 from .models import Item, Category
 
+
 class FoodViewsTestCase(TestCase):
     def setUp(self):
-        # Create a test user and log in
         self.user = User.objects.create_user(username='testuser', password='password')
         self.client = Client()
         self.client.login(username='testuser', password='password')
 
-        # Create a Category
         self.cat = Category.objects.create(name='TestCat', slug='testcat')
 
-        # Create two Items
         self.item1 = Item.objects.create(
             item_name='Item One',
             item_description='First item',
@@ -42,7 +40,7 @@ class FoodViewsTestCase(TestCase):
         url = reverse('food:index')
         response = self.client.get(url)
         self.assertEqual(response.status_code, 200)
-        # both items present in context
+
         self.assertIn(self.item1, response.context['item_list'])
         self.assertIn(self.item2, response.context['item_list'])
         self.assertTemplateUsed(response, 'food/index.html')
@@ -51,15 +49,15 @@ class FoodViewsTestCase(TestCase):
         url = reverse('food:detail', args=[self.item1.pk])
         response = self.client.get(url)
         self.assertEqual(response.status_code, 200)
-        # ingredients_list created by splitting
-        self.assertEqual(response.context['ingredients_list'], ['ing1','ing2'])
+
+        self.assertEqual(response.context['ingredients_list'], ['ing1', 'ing2'])
         self.assertTemplateUsed(response, 'food/detail.html')
 
     def test_category_view_filters(self):
         url = reverse('food:category', args=[self.cat.slug])
         response = self.client.get(url)
         self.assertEqual(response.status_code, 200)
-        # both items share the same category
+
         self.assertQuerysetEqual(
             response.context['item_list'],
             map(repr, [self.item1, self.item2]),
@@ -69,12 +67,11 @@ class FoodViewsTestCase(TestCase):
 
     def test_create_item_view_get_and_post(self):
         url = reverse('food:create_item')
-        # GET shows the form
+
         response = self.client.get(url)
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, 'food/item_form.html')
 
-        # POST creates a new item
         new_data = {
             'item_name': 'New Item',
             'item_description': 'Desc',
@@ -84,21 +81,20 @@ class FoodViewsTestCase(TestCase):
             'ingredients': 'a,b'
         }
         response = self.client.post(url, new_data)
-        # should redirect to detail of the new object
+
         self.assertEqual(response.status_code, 302)
         new = Item.objects.get(item_name='New Item')
         self.assertRedirects(response,
-            reverse('food:detail', args=[new.pk])
-        )
+                             reverse('food:detail', args=[new.pk])
+                             )
 
     def test_edit_item_view_get_and_post(self):
         url = reverse('food:edit_item', args=[self.item1.pk])
-        # GET pre-fills the form
+
         response = self.client.get(url)
         self.assertEqual(response.status_code, 200)
         self.assertContains(response, 'Item One')
 
-        # POST updates description
         data = {
             'item_name': 'Item One',
             'item_description': 'Updated',
@@ -114,12 +110,11 @@ class FoodViewsTestCase(TestCase):
 
     def test_delete_item_view_get_and_post(self):
         url = reverse('food:delete_item', args=[self.item2.pk])
-        # GET shows confirmation
+
         response = self.client.get(url)
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, 'food/item_delete.html')
 
-        # POST deletes and redirects to index
         response = self.client.post(url)
         self.assertRedirects(response, reverse('food:index'))
         with self.assertRaises(Item.DoesNotExist):
